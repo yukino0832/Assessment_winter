@@ -16,22 +16,38 @@
  分别调用 calculateArea 函数，并显示结果。
  */
 
- #include <iostream>
+#include <iostream>
+#define pi 3.14
 
 class Shape {
 public:
-    
+    virtual void calculateArea() {
+    }
 };
 
 class Circle : public Shape {
-
+public:
+    void calculateArea(double r)
+    {
+        std::cout<<pi*r*r<<std::endl;
+    }
 };
 
 
 class Rectangle : public Shape {
-
+public:
+    double a, b;
+    void calculateArea(double a, double b)
+    {
+        std::cout << a*b << std::endl;
+    }
 };
 
 int main() {
-    //补充你的代码
+    Circle circle;
+    Rectangle rectangle;
+    double r, a, b;
+    std::cin >> r >> a >> b;
+    circle.calculateArea(r);
+    rectangle.calculateArea(a,b);
 }

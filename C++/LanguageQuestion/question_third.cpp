@@ -23,30 +23,61 @@ Length of Longest Increasing Subsequence: 6
 提示：最长递增子序列（LIS）问题是在给定序列中找到最长子序列的问题，
  */
 
-
-
 #include <iostream>
 #include <vector>
+#include <string>
 using namespace std;
 
-class LongestIncreasingSubsequence {
+class LongestIncreasingSubsequence
+{
 public:
-    static pair<int, vector<int>> findLongestIncreasingSubsequence(const vector<int>& nums) {
-        // TODO: 添加你的代码，实现你的功能
+    static pair<int, vector<int>> findLongestIncreasingSubsequence(const vector<int> &nums)
+    {
+        int len = nums.size();
+        if (len == 0)
+        {
+            return {0, {}};
+        }
         int maxLength = 0;
-        vector<int> longestSubsequence;
-
-        return { maxLength, longestSubsequence };
+        vector<int> lenth(len);
+        vector<int> pre(len, -1);
+        int i, j;
+        int end = 0;
+        for (i = 0; i < len; i++)
+        {
+            for (j = 0; j < i; j++)
+            {
+                if (nums[i] > nums[j] && lenth[j] + 1 > lenth[i])
+                {
+                    pre[i] = j;
+                    lenth[i] = lenth[j] + 1;
+                    if (maxLength < lenth[i])
+                    {
+                        maxLength = lenth[i];
+                        end = i;
+                    }
+                }
+            }
+        }
+        vector<int> longestSubsequence(maxLength);
+        for (i = 0; i < maxLength; i++)
+        {
+            longestSubsequence[maxLength - i - 1] = nums[end];
+            end = pre[end];
+        }
+        return {maxLength, longestSubsequence};
     }
 };
 
-int main() {
+int main()
+{
     vector<int> input = {10, 22, 9, 33, 21, 50, 41, 60, 80};
 
     auto result = LongestIncreasingSubsequence::findLongestIncreasingSubsequence(input);
 
     cout << "Longest Increasing Subsequence: ";
-    for (int num : result.second) {
+    for (int num : result.second)
+    {
         cout << num << " ";
     }
     cout << endl;
